@@ -309,9 +309,9 @@ class RelMoE(BaseModel):
     
     def get_batch_embeddings(self, batch_inputs):
         head = batch_inputs[:, 0]
-        _, disen_str = self.structure_moe(self.entity_embeddings(head))
-        _, disen_img = self.visual_moe(self.img_entity_embeddings(head))
-        _, disen_txt = self.text_moe(self.txt_entity_embeddings(head))
+        _, disen_str, _ = self.structure_moe(self.entity_embeddings(head))
+        _, disen_img, _ = self.visual_moe(self.img_entity_embeddings(head))
+        _, disen_txt, _ = self.text_moe(self.txt_entity_embeddings(head))
         return [disen_str, disen_img, disen_txt]
 
 

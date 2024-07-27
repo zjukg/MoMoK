@@ -5,8 +5,6 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from models.GAT import GAT
-from models.DisenMoE import DisKoMoE
 from models.RelMoE import RelMoE
 from models.model import *
 from models.modules import MIEstimator
