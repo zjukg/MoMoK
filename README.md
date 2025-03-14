@@ -12,7 +12,7 @@
 - tqdm==4.64.1
 
 ## 💻 Data preparation
-The multi-model embedding of MMKGs are too large so you should download them from the Google Drive Link (updated soon).
+The multi-model embedding of MMKGs are too large so you should download them from the [Google Drive Link](https://drive.google.com/file/d/1nRHdeWiVi9d_FKli3x7sO87ARasad39w/view?usp=sharing). Please unzip the embedding files and put them in the corresponding path in `datasets/`
 
 
 
