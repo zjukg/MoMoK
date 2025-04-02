@@ -140,7 +140,7 @@ def train_decoder(args):
             estimator_loss.backward()
             optimizer_mi.step()
             epoch_loss.append(loss.data.item())
-            epoch_mi_loss.append(0.0)
+            epoch_mi_loss.append(estimator_loss.item())
         training_range.set_postfix(loss="main: {:.5} mi: {:.5}".format(sum(epoch_loss), sum(epoch_mi_loss)))
         lr_scheduler.step()
 
