@@ -324,7 +324,8 @@ class ConvECorpus(Corpus):
             head_batch_indices = torch.LongTensor([indice['triple'] for indice in head_batch])
             head_batch_indices = head_batch_indices.to(self.device)
             rel_ids = head_batch_indices[:, 1]
-            pred = model.forward(head_batch_indices)[index]
+            pred, attention = model.forward(head_batch_indices)
+            pred = pred[index]
             label = [np.int32(indice['label']) for indice in head_batch]
             y = np.zeros((len(head_batch), len(self.entity2id)), dtype=np.float32)
             for idx in range(len(label)):
@@ -354,7 +355,8 @@ class ConvECorpus(Corpus):
             tail_batch_indices = torch.LongTensor([indice['triple'] for indice in tail_batch])
             tail_batch_indices = tail_batch_indices.to(self.device)
             rel_ids = tail_batch_indices[:, 1]
-            pred = model.forward(tail_batch_indices)[index]
+            pred, attention = model.forward(tail_batch_indices)
+            pred = pred[index]
             label = [np.int32(indice['label']) for indice in tail_batch]
             y = np.zeros((len(tail_batch), len(self.entity2id)), dtype=np.float32)
             for idx in range(len(label)):

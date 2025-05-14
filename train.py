@@ -150,10 +150,6 @@ def train_decoder(args):
             model.eval()
             with torch.no_grad():
                 val_metrics = corpus.get_validation_pred(model, 'test')
-                val_metrics_s = corpus.get_validation_pred_signle(model, 'test', 0)
-                val_metrics_i = corpus.get_validation_pred_signle(model, 'test', 1)
-                val_metrics_t = corpus.get_validation_pred_signle(model, 'test', 2)
-                val_metrics_mm = corpus.get_validation_pred_signle(model, 'test', 3)
             if val_metrics['MRR'] > best_test_metrics['MRR']:
                 best_test_metrics['MRR'] = val_metrics['MRR']
             if val_metrics['MR'] < best_test_metrics['MR']:
@@ -167,10 +163,6 @@ def train_decoder(args):
             if val_metrics['Hits@100'] > best_test_metrics['Hits@100']:
                 best_test_metrics['Hits@100'] = val_metrics['Hits@100']
             print('\n'.join(['Epoch: {:04d}'.format(epoch + 1), model.format_metrics(val_metrics, 'test')]))
-            print('\n'.join(['Epoch: {:04d}, Structure: '.format(epoch + 1), model.format_metrics(val_metrics_s, 'test')]))
-            print('\n'.join(['Epoch: {:04d}, Image: '.format(epoch + 1), model.format_metrics(val_metrics_i, 'test')]))
-            print('\n'.join(['Epoch: {:04d}, Text: '.format(epoch + 1), model.format_metrics(val_metrics_t, 'test')]))
-            print('\n'.join(['Epoch: {:04d}, Multi-modal: '.format(epoch + 1), model.format_metrics(val_metrics_mm, 'test')]))
             print("\n\n")
 
 
