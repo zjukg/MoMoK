@@ -83,19 +83,30 @@ class MIEstimator(nn.Module):
 
     def forward(self, embeddings):
         strs, imgs, txts = embeddings
-        idx1, idx2 = random.sample(range(self.num), k=2)
-        str1, str2 = strs[idx1], strs[idx2]
-        img1, img2 = imgs[idx1], imgs[idx2]
-        txt1, txt2 = txts[idx1], txts[idx2]
-        mi_loss = (self.str_estimator(str1, str2) + self.img_estimator(img1, img2) + self.txt_estimator(txt1, txt2)) / 3.0
+        bzs, n_exp, _ = strs.size()
+        assert n_exp == self.num
+        idx1, idx2 = random.sample(range(n_exp), k=2)
+        str1, str2 = strs[:, idx1, :], strs[:, idx2, :]
+        img1, img2 = imgs[:, idx1, :], imgs[:, idx2, :]
+        txt1, txt2 = txts[:, idx1, :], txts[:, idx2, :]
+        mi_loss = (
+            self.str_estimator(str1, str2)
+            + self.img_estimator(img1, img2)
+            + self.txt_estimator(txt1, txt2)
+        ) / 3.0
         return mi_loss
-    
+
     def train_estimator(self, embeddings):
         strs, imgs, txts = embeddings
-        idx1, idx2 = random.sample(range(self.num), k=2)
-        str1, str2 = strs[idx1], strs[idx2]
-        img1, img2 = imgs[idx1], imgs[idx2]
-        txt1, txt2 = txts[idx1], txts[idx2]
-        est_loss = (self.str_estimator.learning_loss(str1, str2) + self.img_estimator.learning_loss(img1, img2) + self.txt_estimator.learning_loss(txt1, txt2)) / 3.0
+        bzs, n_exp, _ = strs.size()
+        assert n_exp == self.num
+        idx1, idx2 = random.sample(range(n_exp), k=2)
+        str1, str2 = strs[:, idx1, :], strs[:, idx2, :]
+        img1, img2 = imgs[:, idx1, :], imgs[:, idx2, :]
+        txt1, txt2 = txts[:, idx1, :], txts[:, idx2, :]
+        est_loss = (
+            self.str_estimator.learning_loss(str1, str2)
+            + self.img_estimator.learning_loss(img1, img2)
+            + self.txt_estimator.learning_loss(txt1, txt2)
+        ) / 3.0
         return est_loss
-
